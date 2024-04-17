@@ -1,4 +1,3 @@
-
 """
 update this file to implement the following already declared methods:
 - add_member: Should add a member to the self._members list
@@ -21,27 +20,32 @@ class FamilyStructure:
 
     def add_member(self, member):
         # fill this method and update the return
-        id = member.get("id", None)
-        if id != None:
-            for person in self._members:
-                if person:get("id") == id:
-                return {
-                    "msg": "Tu DNI es repetido asigne uno nuevo"
-                }
-            else:
-                member["id"] = self._generateId()
-                self._members.append(member)
-                return True
-            
-            
+        id = member.get("id", None) 
+        if id != None: 
+            for person in self._members: 
+                if person.get("id") == id: 
+                    return {
+                        "msg": "Tu cedula era repetida asi que asigne una nueva"
+                    }
+        else: 
+            member["id"] = self._generateId() 
+
+        self._members.append(member)
+        return True
 
     def delete_member(self, id):
         # fill this method and update the return
-        pass
+            for member in self._members:
+                if member['id'] == id:
+                    self._members.remove(member)
+                    return self._members  
+
 
     def get_member(self, id):
         # fill this method and update the return
-        pass
+        for member in self._members:
+            if member['id'] == id:
+                return member
 
     # this method is done, it returns a list with all the family members
     def get_all_members(self):
