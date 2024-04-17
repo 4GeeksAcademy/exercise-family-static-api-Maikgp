@@ -44,16 +44,20 @@ jackson_family.add_member(Jimmy)
 
 
 # Handle/serialize errors like a JSON object
+
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 # generate sitemap with all your endpoints
+
 @app.route('/')
 def sitemap():
     return generate_sitemap(app)
 
 
+
+#endpoint traer a todos los miembros
 
 @app.route('/members', methods=['GET'])
 def handle_hello():
@@ -61,6 +65,40 @@ def handle_hello():
     members = jackson_family.get_all_members()
     response_body = members
     return jsonify(response_body), 200
+
+
+
+#endpoint POST
+
+@app.route('/member', methods=['POST'])
+def add_member():
+    new_member = request.json
+    success = jackson_family.add_member(new_member)
+    if success == True:
+        return jsonify(new_member), 200
+    return jsonify(success), 400
+
+
+
+
+#endpoint DELETE
+@app.route('/member/<int:member_id>', methods=['DELETE'])
+def delete_member(member_id):
+    success = jackson_family.delete_member(member_id)
+    return jsonify({'done': True}), 200
+
+
+
+
+#endpoint recuperar un solo miembro
+@app.route('/member/<int:member_id>', methods=['GET'])
+def get_member(member_id)
+    one_member = jackson_family.get_all_members(member_id)
+    return jsonify(one_member), 200
+
+
+
+
 
 
 # this only runs if `$ python src/app.py` is executed
